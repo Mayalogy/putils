@@ -1,8 +1,4 @@
 from putils_misc import RankedTrie
-from putils_misc import ImageManipulator
-import glob
-import shutil
-import os
 
 import unittest
 
