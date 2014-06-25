@@ -1,4 +1,8 @@
-putils
-======
+utils
+=====
 
-Generic Python Utilities
+python utility module
+
+* Test
+
+To run all tests: 'python src/main/py/tests.py'
