@@ -1,7 +1,14 @@
 import numpy as np
 from putils_stats import StatsUtil
 from putils_stats import FrequencyAssessor
+from putils_stats import ClassifierFactory
 import unittest
+
+class TestClassifierFactory(unittest.TestCase):
+
+    def test_get_classifier_types(self):
+        for t in ClassifierFactory().get_classifier_types():
+            print t
 
 class TestFrequencyAssessor(unittest.TestCase):
 

@@ -1,4 +1,12 @@
 import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.lda import LDA
+from sklearn.qda import QDA
 
 class FrequencyAssessor(object):
 
@@ -77,3 +85,29 @@ class StatsUtil(object):
                 error+=1
 
         return  error*1.0/len(x)
+
+class ClassifierFactory(object):
+
+    def __init__(self, value=None):
+        self.classifier_map = ClassifierFactory._init()
+
+    def get_classifier_types(self):
+        return self.classifier_map.keys()
+
+    @staticmethod
+    def _init():
+        classifier_map = dict()
+        classifier_map["NearestNeighbors"]=KNeighborsClassifier(3)
+        classifier_map["LinearSVM"]=SVC(kernel="linear", C=0.025)
+        classifier_map["RandomForest"]=RandomForestClassifier(max_depth=5, n_estimators=10, max_features=1)
+        classifier_map["AdaBoost"]=AdaBoostClassifier()
+        classifier_map["NaiveBayes"]=GaussianNB()
+        classifier_map["LDA"]=LDA()
+        classifier_map["QDA"]=QDA()
+        classifier_map["RBFSVM"]= SVC(gamma=2, C=1)
+        classifier_map["DecisionTree"]=DecisionTreeClassifier(max_depth=5)
+        return  classifier_map
+
+    def get(self, classifier_type):
+        print "initializing " + classifier_type + " classifier"
+        return self.classifier_map[classifier_type]
