@@ -24,16 +24,16 @@ class KMeansClusterer(object):
         print "assigning observation class codes"
         code,distance=vq(features,centroids)
 
-        num_clusters_w_points=[[]]*num_clusters
+        clusters_w_points=[[]]*num_clusters
         for i in range(num_clusters):
             ndx = pl.where(code==i)[0]
-            classes_w_points[i]=[]
+            clusters_w_points[i]=[]
 
             for j in range(len(ndx)):
                 points[ndx[j]].labels.append(i) #add class label to the point                    
-                classes_w_points[i].append(points[ndx[j]])    #add the point to the class list
+                clusters_w_points[i].append(points[ndx[j]])    #add the point to the class list
 
-        return classes_w_points, centroids
+        return clusters_w_points, centroids
     
 class PayloadPoint(object):
     """

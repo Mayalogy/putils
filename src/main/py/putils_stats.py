@@ -7,6 +7,8 @@ from sklearn.ensemble import AdaBoostClassifier
 from sklearn.naive_bayes import GaussianNB
 from sklearn.lda import LDA
 from sklearn.qda import QDA
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.ensemble import GradientBoostingClassifier
 
 class FrequencyAssessor(object):
 
@@ -99,13 +101,16 @@ class ClassifierFactory(object):
         classifier_map = dict()
         classifier_map["NearestNeighbors"]=KNeighborsClassifier(3)
         classifier_map["LinearSVM"]=SVC(kernel="linear", C=0.025)
-        classifier_map["RandomForest"]=RandomForestClassifier(max_depth=5, n_estimators=10, max_features=1)
+        classifier_map["RandomForest"] = RandomForestClassifier(max_depth=15, n_estimators=15, max_features=10)
         classifier_map["AdaBoost"]=AdaBoostClassifier()
         classifier_map["NaiveBayes"]=GaussianNB()
+        classifier_map["NaiveBayesDisc"]     = MultinomialNB()
         classifier_map["LDA"]=LDA()
         classifier_map["QDA"]=QDA()
-        classifier_map["RBFSVM"]= SVC(gamma=2, C=1)
+        classifier_map["RBFSVM"]             = SVC(kernel="rbf", C=0.125)
         classifier_map["DecisionTree"]=DecisionTreeClassifier(max_depth=5)
+        classifier_map["GradientBDT"]=GradientBoostingClassifier(max_features=400)
+
         return  classifier_map
 
     def get(self, classifier_type):
