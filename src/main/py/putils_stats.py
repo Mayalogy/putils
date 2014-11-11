@@ -9,22 +9,32 @@ from sklearn.lda import LDA
 from sklearn.qda import QDA
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.ensemble import GradientBoostingClassifier
+from sets import Set
 
 class FrequencyAssessor(object):
 
     def __init__(self):
         self.terms = dict()
+        self.associated_objects=dict()
 
-    def update(self, term, amount=1):
+    def update(self, term, amount=1, associated_object=None):
         """
         Updates a new incidence of the term
         @param term: A string term to be counted
         @param amount: the amount to increment for this term
+        @param associated_object: An object associated w/ the key
         """
         if(term not in self.terms):
             self.terms[term]=0
 
         self.terms[term]+=amount
+
+        if(associated_object!=None):
+            if term not in self.associated_objects:
+                self.associated_objects[term]=Set([])
+
+            if associated_object not in self.associated_objects[term]:
+                self.associated_objects[term].add(associated_object)
 
     def get_top_terms(self, max=100):
         """
@@ -34,6 +44,15 @@ class FrequencyAssessor(object):
 
         return sorted(self.terms.iteritems(), key=lambda x:x[1], reverse=True)[:max]
 
+    def get_associated_objects(self, term):
+        """
+        Returns a list of objects associated w/ the term.
+        """
+
+        if term in self.associated_objects:
+            return self.associated_objects[term]
+
+        return []
 
 class StatsUtil(object):
     

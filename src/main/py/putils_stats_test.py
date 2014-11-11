@@ -15,18 +15,22 @@ class TestFrequencyAssessor(unittest.TestCase):
     def test_get_top_terms(self):
 
         fass = FrequencyAssessor()
-        fass.update("dog")
-        fass.update("dog")
+        fass.update("dog", associated_object="dogs1")
+        fass.update("dog", associated_object="dogs2")
+        fass.update("dog", associated_object="dogs2")
         fass.update("cat")
         fass.update("pig",33)
 
-        tts= fass.get_top_terms()
+        tts = fass.get_top_terms(25)
         self.assertTrue(tts[0][0]=="pig")
         self.assertTrue(tts[0][1]==33)
         self.assertTrue(tts[1][0]=="dog")
-        self.assertTrue(tts[1][1]==2)
+        self.assertTrue(tts[1][1]==3)
 
         self.assertTrue(len(fass.get_top_terms(2))==2)
+
+        self.assertTrue(len( fass.get_associated_objects("dog"))==2)
+        self.assertTrue(len( fass.get_associated_objects("chickimickies33"))==0)
 
 class TestStatsUtil(unittest.TestCase):
 
