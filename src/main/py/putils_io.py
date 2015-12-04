@@ -75,7 +75,7 @@ class FileUtil(object):
     @staticmethod
     def dump_string_to_file(file_path, string_to_write):
         file_output = codecs.open(file_path, 'w', 'utf-8')
-        file_output.write(string_to_write)
+        file_output.write(unicode(string_to_write, 'utf-8'))
         file_output.close()
 
 class UrlUtil(object):
